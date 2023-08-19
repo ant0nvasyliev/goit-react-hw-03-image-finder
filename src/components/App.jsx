@@ -1,12 +1,12 @@
 import { Component } from 'react';
-import SearchBar from './Searchbar/Searchbar'; // Імпорт компонента пошукової панелі
-import * as API from './api'; // Імпорт функцій для роботи з API
-import { ImageGallery } from './ImageGallery/ImageGallery'; // Імпорт компонента галереї зображень
-import { Loader } from './Loader/Loader'; // Імпорт компонента завантаження
-import { Button } from './Button/Button'; // Імпорт компонента кнопки
-import { ToastContainer, toast, Slide } from 'react-toastify'; // Імпорт компонентів для сповіщень
-import 'react-toastify/dist/ReactToastify.css'; // Імпорт стилів для сповіщень
-import { AppWrapper } from './App.styled'; // Імпорт стилів для обгортки додатку
+import SearchBar from './Searchbar/Searchbar'; 
+import * as API from './api'; 
+import { ImageGallery } from './ImageGallery/ImageGallery'; 
+import { Loader } from './Loader/Loader'; 
+import { Button } from './Button/Button'; 
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AppWrapper } from './App.styled';
 
 export default class App extends Component {
   state = {
@@ -39,7 +39,7 @@ export default class App extends Component {
   handleSubmit = query => {
     this.setState({
       searchName: `${Date.now()}/${query}`, // Записуємо запит для пошуку з унікальним id
-      // searchName: query, // Записуємо запит для пошуку з унікальним id
+
       images: [], // Очищуємо масив зображень
       currentPage: 1, // Скидаємо номер сторінки на 1
     });
@@ -72,11 +72,11 @@ export default class App extends Component {
         images: [...state.images, ...normalizedImages], // Додаємо нові зображення
         isLoading: false, // Вимикаємо прапорець завантаження
         error: '', // Очищаємо повідомлення про помилку
-        totalPages: Math.ceil(data.totalHits / 12), // Встановлюємо кількість сторінок
       }));
     } catch (error) {
-      this.setState({ error: 'Виникла помилка!' }); // Встановлюємо повідомлення про помилку
-    } finally {
+      this.setState({ error: 'error' }); // Встановлюємо повідомлення про помилку
+    } 
+    finally {
       this.setState({ isLoading: false }); // Вимикаємо прапорець завантаження незалежно від результату
     }
   };
@@ -86,10 +86,10 @@ export default class App extends Component {
 
     return (
       <AppWrapper>
-        <ToastContainer transition={Slide} /> {/* Контейнер для сповіщень */}
-        <SearchBar onSubmit={this.handleSubmit} onReset={this.resetGallery} /> {/* Компонент пошукової панелі */}
+        <ToastContainer transition={Slide} /> 
+        <SearchBar onSubmit={this.handleSubmit} onReset={this.resetGallery} /> 
         {images.length > 0 ? (
-          <ImageGallery images={images} /> // Відображення галереї зображень
+          <ImageGallery images={images} />
         ) : (
           <p
             style={{
@@ -100,9 +100,9 @@ export default class App extends Component {
             empty
           </p>
         )}
-        {isLoading && <Loader />} {/* Відображення індикатора завантаження */}
+        {isLoading && <Loader />}
         {images.length > 0 && totalPages !== currentPage && !isLoading && (
-          <Button onClick={this.loadMore} /> // Кнопка завантаження додаткових зображень
+          <Button onClick={this.loadMore} />
         )}
       </AppWrapper>
     );

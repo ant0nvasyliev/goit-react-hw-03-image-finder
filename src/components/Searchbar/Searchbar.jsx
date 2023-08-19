@@ -1,21 +1,13 @@
-// Імпорт компонента Component з бібліотеки 'react'
 import { Component } from 'react';
-
-// Імпорт стилізованих компонентів SearchbarHeader, SearchForm, SearchFormButton та SearchFormInput з файлу './Searchbar.styled'
 import { SearchbarHeader, SearchForm, SearchFormButton, SearchFormInput, ResetButton, OnTopButton } from './Searchbar.styled';
-
-// Імпорт іконки пошуку з пакету react-icons/bi
 import { BiSearchAlt } from 'react-icons/bi';
-
 import { ToastContainer, toast, Slide } from 'react-toastify'; // Імпорт компонентів для сповіщень
-
 import 'react-toastify/dist/ReactToastify.css'; // Імпорт стилів для сповіщень
 
-// Класовий компонент SearchBar
 export default class SearchBar extends Component {
   // Початковий стан компонента
   state = {
-    inputValue: '', // Початкове значення для поля введення користувача
+    inputValue: '', // Початкове значення для поля введення
   };
 
   // Обробник зміни значення поля введення
@@ -23,7 +15,7 @@ export default class SearchBar extends Component {
     this.setState({ inputValue: event.target.value }); // Оновлюємо стан зі значенням поля введення
   };
 
-  // Обробник подання форми
+  // Запобігання перезавантаження під час сабміту
   handleSubmit = event => {
     event.preventDefault();
 
@@ -48,34 +40,28 @@ export default class SearchBar extends Component {
   handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Щоб прокрутка була плавною
+      behavior: "smooth", // Плавний скрол
     });
   };
 
   render() {
     return (
-      // Елемент заголовка пошукової панелі
       <SearchbarHeader>
-        <ToastContainer transition={Slide} /> {/* Контейнер для сповіщень */}
-        {/* Форма для пошуку */}
+        <ToastContainer transition={Slide} />
         <SearchForm onSubmit={this.handleSubmit}>
-          {/* Кнопка подання форми */}
           <SearchFormButton type='submit'>
-            <span><BiSearchAlt size={25} /></span> {/* Відображення іконки пошуку */}
+            <span><BiSearchAlt size={25} /></span> 
           </SearchFormButton>
-          {/* Поле введення для пошуку */}
           <SearchFormInput 
-            className="input" // Додатковий клас для стилізації, якщо потрібно
+            className="input"
             type="text"
-            autoFocus // Автофокус на полі введення
-            placeholder="search here" // Плейсхолдер для поля введення
-            value={this.state.inputValue} // Поточне значення поля введення
-            onChange={this.handleChange} // Обробник зміни значення поля введення
+            autoFocus
+            placeholder="search here"
+            value={this.state.inputValue}
+            onChange={this.handleChange}
           />
         </SearchForm>
-        {/* Кнопка обнулення масиву картинок в стейті */}
         <ResetButton type='button' onClick={this.handleReset} >reset</ResetButton>
-        {/* Кнопка скролу догори */}
         <OnTopButton type='button' onClick={this.handleScrollToTop} >up</OnTopButton>
       </SearchbarHeader>
     );

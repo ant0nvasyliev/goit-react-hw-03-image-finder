@@ -16,5 +16,5 @@ width: 100%;
   object-fit: cover;
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
-  max-width: 100%;
 `;
+
