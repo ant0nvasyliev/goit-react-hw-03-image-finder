@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { SearchbarHeader, SearchForm, SearchFormButton, SearchFormInput, ResetButton, OnTopButton } from './Searchbar.styled';
 import { BiSearchAlt } from 'react-icons/bi';
-import { ToastContainer, toast, Slide } from 'react-toastify'; // Імпорт компонентів для сповіщень
 import 'react-toastify/dist/ReactToastify.css'; // Імпорт стилів для сповіщень
 
 export default class SearchBar extends Component {
@@ -18,14 +17,6 @@ export default class SearchBar extends Component {
   // Запобігання перезавантаження під час сабміту
   handleSubmit = event => {
     event.preventDefault();
-
-    // Валідація вводу
-    if (this.state.inputValue.trim() === '') {
-      toast.error('Введіть пошуковий запит.', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return; // Вихід, якщо поле вводу порожнє
-    }
 
     this.props.onSubmit(this.state.inputValue);
     this.setState({ inputValue: '' });
@@ -47,7 +38,6 @@ export default class SearchBar extends Component {
   render() {
     return (
       <SearchbarHeader>
-        <ToastContainer transition={Slide} />
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchFormButton type='submit'>
             <span><BiSearchAlt size={25} /></span> 

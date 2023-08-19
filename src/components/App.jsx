@@ -37,11 +37,18 @@ export default class App extends Component {
 
   // Обробка подання форми від компонента SearchBar
   handleSubmit = query => {
+    if (query.trim() === '') {
+      // Перевіряємо, чи форма не пуста
+      toast.info('enter a search query.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+  
     this.setState({
-      searchName: `${Date.now()}/${query}`, // Записуємо запит для пошуку з унікальним id
-
-      images: [], // Очищуємо масив зображень
-      currentPage: 1, // Скидаємо номер сторінки на 1
+      searchName: `${Date.now()}/${query}`,
+      images: [],
+      currentPage: 1,
     });
   };
 
@@ -60,10 +67,14 @@ export default class App extends Component {
       const data = await API.getImages(searchName, currentPage);
 
       if (data.hits.length === 0) {
-        // Якщо зображень не знайдено
-        return toast.info('image was not found...', {
+        // Видаляємо попередні нотифікації
+        toast.dismiss();
+    
+        // Виводимо нову нотифікацію про відсутність зображень
+        toast.info('Image was not found...', {
           position: toast.POSITION.TOP_RIGHT,
         });
+        return;
       }
 
       const normalizedImages = API.normalizedImages(data.hits);
